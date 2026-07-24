@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68788f708ff8e3c448f121811384dbf9, type: 3}
+  m_Name: HumanData
+  m_EditorClassIdentifier: 
+  raceName: Human
+  baseAttack: 80
+  baseDefense: 70
+  baseHealth: 300
+  baseSpeed: 85
+  baseMitigation: 0.2
+  baseAnomaly: 1
