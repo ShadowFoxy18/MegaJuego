@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Human : Character
 {
-    public Human(string name, RaceData raceData, ClassData classData) : base(name, raceData, classData)
+    public Human(string name, int level, RaceData raceData, ClassData classData) : base(name, level, raceData, classData)
     {
 
     }

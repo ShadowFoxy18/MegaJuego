@@ -1,9 +1,20 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewRace", menuName = "CharacterData/RaceData", order = 1)]
 public class RaceData : ScriptableObject
 { 
     public string raceName = "Unknown";
+
+    [Min (1)] public List<ElementType> afinityType = new List<ElementType> { ElementType.Fisico };
+    public ResistenceElement[] resistenceElements;
+
+    [System.Serializable]
+    public class ResistenceElement
+    {
+        public ElementType[] elementsType;
+        [Range(0.0f, 1.0f)] public float resistanceValue = 0.0f;
+    }
 
     [Range (5, 250)] public int baseAttack = 5;
     [Range (20, 150)] public int baseDefense = 20;
