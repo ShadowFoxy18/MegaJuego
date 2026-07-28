@@ -12,7 +12,7 @@ public class DamageManager
 
     private float GetBaseDamage(AttackerStats atk)
     {
-        return atk.attack * atk.baseEscalator * atk.atqMultiplier * atk.multiplierDamage;
+        return atk.attackType * atk.baseEscalator * atk.atqMultiplier * atk.multiplierDamage;
     }
 
     private float GetResistenceMultiplier(AttackerStats atk, DefenderStats def)

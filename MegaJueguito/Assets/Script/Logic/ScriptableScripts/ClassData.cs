@@ -13,7 +13,7 @@ public class ClassData : ScriptableObject
     public class ResistenceElement
     {
         public ElementType[] elementsType;
-        [Range(0.0f, 1.0f)] public float resistanceValue = 0.0f;
+        [Range(0.3f, 2.5f)] public float resistanceValue = 1.0f;
     }
 
     [Range(1f, 2.5f)] public float baseAttackMultiplier = 1f;

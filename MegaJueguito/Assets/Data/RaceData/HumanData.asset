@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: HumanData
   m_EditorClassIdentifier: 
   raceName: Human
+  afinityType: 0800000008000000
+  resistenceElements:
+  - elementsType: 00000000
+    resistanceValue: 0.256
   baseAttack: 80
   baseDefense: 70
   baseHealth: 300

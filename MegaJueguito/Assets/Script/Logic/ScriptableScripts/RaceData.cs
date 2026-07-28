@@ -13,13 +13,14 @@ public class RaceData : ScriptableObject
     public class ResistenceElement
     {
         public ElementType[] elementsType;
-        [Range(0.0f, 1.0f)] public float resistanceValue = 0.0f;
+        [Range(0.3f, 2.5f)] public float resistanceValue = 1.0f;
     }
 
     [Range (5, 250)] public int baseAttack = 5;
     [Range (20, 150)] public int baseDefense = 20;
     [Range (10, 500)] public int baseHealth = 10;
-    [Range (60, 120)] public int baseSpeed = 60;
+    [Range (60, 280)] public int baseSpeed = 60;
+    [Range (100, 600)] public int baseStamina = 120;
 
     [Range (0.0f, 0.4f)] public float baseMitigation = 0.0f;
     [Range (1.0f, 2.0f)] public float baseAnomaly = 1.0f;

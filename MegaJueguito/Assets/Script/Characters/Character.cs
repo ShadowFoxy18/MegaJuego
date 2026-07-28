@@ -92,5 +92,37 @@ public abstract class Character
         _resistances = newResistences;
     }
         
+    public AttackerStats GetAttackStats()
+    {
+        return new AttackerStats
+        {
+            level = _characterLevel,
+            attackType = _attack,
+            baseEscalator = 1.0f, // Placeholder for skill data
 
+            maestry = _maestry,
+            anomaly = _anomaly,
+
+            atqMultiplier = 1.0f, // Placeholder for skill data
+
+            vulnerability = 0f, // Placeholder for active status effects
+            penetrationRes = 0f, // Placeholder for active status effects
+
+            multiplierDamage = 1.0f, // Placeholder for skill data
+            additiveDamage = 0f // Placeholder for weapon and active reactions
+        };
+    }
+
+    public DefenderStats GetDefenseStats(ElementType element)
+    {
+        return new DefenderStats
+        {
+            level = _characterLevel,
+            defense = _defense,
+            mitigation = _mitigation,
+            reduction = 0f, // Placeholder for active status effects
+            elementalRes = _resistances.ContainsKey(element) ? _resistances[element] : 1.0f,
+            additiveDamage = 0f // Placeholder for active status effects that increase damage taken
+        };
+    }
 }

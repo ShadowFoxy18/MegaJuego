@@ -3,7 +3,7 @@ using UnityEngine;
 public struct AttackerStats
 {
     public int level;
-    public float attack;         // Character._attack
+    public float attackType;         // Character._attack
     public float maestry;        // Character._maestry
     public float anomaly;        // Character._anomaly
     public float vulnerability;  // 0f por ahora, pendiente sistema de estados activos
