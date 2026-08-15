@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public abstract class Character
+public abstract class Character : ITurnParticipant
 {
     protected string _name;
     protected RaceData _raceData;
@@ -23,6 +23,8 @@ public abstract class Character
     protected float _mitigation;
     protected float _anomaly;
     protected float _maestry;
+
+    public float Speed => _speed;
 
     protected Character(string name, int characterLevel, RaceData raceData, ClassData classData)
     {
