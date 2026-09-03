@@ -1,7 +1,8 @@
 public enum Team
 {
     Protagonist,
-    Antagonist
+    Antagonist,
+    None
 }
 
 public interface ITurnParticipant
@@ -17,7 +18,7 @@ public struct ActionValueData
 
     public ActionValueData(float speed)
     {
-        baseAV = TurnManager.BASE_ACTION_GAUGE / speed;
+        baseAV = TurnQueue.BASE_ACTION_GAUGE / speed;
         currentAV = baseAV;
     }
 }
