@@ -6,6 +6,7 @@ using UnityEngine;
 public abstract class Character : ITurnParticipant
 {
     protected string _name;
+    public string Name => _name;
     protected RaceData _raceData;
     protected ClassData _classData;
     protected int _characterLevel = 1;
@@ -25,6 +26,9 @@ public abstract class Character : ITurnParticipant
     protected float _maestry;
 
     public float Speed => _speed;
+
+    protected int _equippedWeaponId = -1; // -1 = sin arma equipada
+    public int EquippedWeaponId => _equippedWeaponId;
 
     protected Character(string name, int characterLevel, RaceData raceData, ClassData classData)
     {
@@ -60,7 +64,7 @@ public abstract class Character : ITurnParticipant
         {
             float resistence = 1.0f;
 
-            if (_raceResistenceElements  != null)
+            if (_raceResistenceElements != null)
             {
                 foreach (RaceData.ResistenceElement raceResistence in _raceResistenceElements)
                 {
@@ -93,7 +97,7 @@ public abstract class Character : ITurnParticipant
         }
         _resistances = newResistences;
     }
-        
+
     public AttackerStats GetAttackStats()
     {
         return new AttackerStats
@@ -126,5 +130,10 @@ public abstract class Character : ITurnParticipant
             elementalRes = _resistances.ContainsKey(element) ? _resistances[element] : 1.0f,
             additiveDamage = 0f // Placeholder for active status effects that increase damage taken
         };
+    }
+
+    public void EquipWeapon(int weaponItemId)
+    {
+        _equippedWeaponId = weaponItemId;
     }
 }
