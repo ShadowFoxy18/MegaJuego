@@ -5,8 +5,6 @@ public class DamageManager
         float baseDamage = GetBaseDamage(atk);
         float resistenceMultiplier = GetResistenceMultiplier(atk, def);
 
-        // El daño aditivo se suma AL FINAL, fuera de la multiplicación,
-        // para que un "+15 fijo" no se vea reducido por la resistencia del defensor.
         return (baseDamage * resistenceMultiplier) + atk.additiveDamage + def.additiveDamage;
     }
 
