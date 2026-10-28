@@ -6,7 +6,7 @@ public static class EnemyFactory
 
         if (data.startingWeapon != null)
         {
-            character.EquipWeapon(data.startingWeapon.itemId);
+            //character.EquipWeapon(data.startingWeapon.itemId);
         }
 
         EnemyBrain brain = EnemyBrainFactory.Create(data.alignment);
