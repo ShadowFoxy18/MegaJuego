@@ -523,6 +523,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EventSystem
       objectReference: {fileID: 0}
+    - target: {fileID: 3950766966629421005, guid: 6313fb368dab984449ee5b07e96d23a3, type: 3}
+      propertyPath: battleZonePrefab
+      value: 
+      objectReference: {fileID: 1705772736822195137, guid: 0ec4349e7166bf64cb49666c465ffcd8, type: 3}
     - target: {fileID: 6404819298125762613, guid: 6313fb368dab984449ee5b07e96d23a3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 569.07227
