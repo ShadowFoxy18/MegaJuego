@@ -37,4 +37,9 @@ public class DamageManager
     {
         return 1.0f - def.elementalRes + atk.penetrationRes;
     }
+
+    float GetElementalFactor(AttackerStats atk)
+    {
+        return 1.0f + atk.elementalBonus;
+    }
 }
