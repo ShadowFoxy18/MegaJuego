@@ -40,6 +40,6 @@ public class DamageManager
 
     float GetElementalFactor(AttackerStats atk)
     {
-        return 1.0f + atk.elementalBonus;
+        return 1.0f ;
     }
 }
