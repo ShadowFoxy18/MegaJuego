@@ -202,8 +202,8 @@ Vórtice se ha documentado con **2 turnos** y Vórtice Etéreo con **3** en el e
 ## 6. Éter: cargas y Corrupción
 
 - La Anomalía Etérea genera **cargas de Corrupción Etérea**.
-- Cada carga aumenta el daño recibido por el afectado; el porcentaje crece según las cargas activas y la Maestría del aplicador. La fórmula y los porcentajes siguen abiertos.
-- Las cargas tienen duración. Una nueva Anomalía Etérea renueva sus turnos.
+- Cada carga aumenta el daño que recibe el afectado; mientras tenga cargas, cada golpe recibido añade daño fijo escalado por Maestría: `Daño fijo según las cargas activas × X % de Maestría`. Esta forma de cálculo quedó acordada en la conversación; X y los valores fijos por carga siguen pendientes.
+- El máximo acordado es de **4 cargas**. Las cargas desaparecen tras **2 turnos del portador**. El documento propone que una nueva Anomalía Etérea renueve su duración; falta confirmarlo.
 - Cuando el objetivo ya tiene 4 cargas, la siguiente aplicación (la quinta) activa **Corrupción** durante 3 turnos.
 - Corrupción reduce las resistencias elementales del afectado. Hay que cerrar si se refiere a bajar la resistencia elemental del objetivo o a modificar el atributo llamado `PEN a Res` en la fórmula, ya que son operaciones distintas.
 - Éter, Viento y Naturaleza pueden coexistir. La interacción Éter+Viento que transforma Vórtice en Vórtice Etéreo no impide que Naturaleza siga presente.
@@ -287,7 +287,7 @@ Es un esquema conceptual para facilitar la implementación; los nombres de clase
 - Los tres valores de `ReactionDamage` (`ReactionMultiplier`, `ReactionNumerator`, `ReactionDenominator`) para cada reacción que cause daño.
 - Cómo incorpora Tasa de Anomalía la fórmula de daño propio de reacción.
 - Multiplicadores y componente de daño final de Vaporizado, Derretido, Plasma y Quebrahielo en relación con la fórmula común; los factores de golpe actuales son ×1,5, ×2,5, ×1,8 y ×1,3 respectivamente.
-- Valores de las cargas etéreas, duración/renovación exacta y fórmula de Corrupción.
+- Daño fijo de cada nivel de carga, porcentaje X de Maestría y qué personaje aporta esa Maestría; confirmar si una nueva Anomalía Etérea renueva la duración.
 - Qué atributo reduce Corrupción: Resistencia Elemental o `PEN a Res`.
 - Duración/magnitud de retrasos de Sobrecarga, Congelado, Superconductor, Calcinado y Enredo Corrupto.
 - Reglas detalladas de las interacciones Lumen+Naturaleza y Lumen+Éter, manteniendo clara la protección de Purificación.
