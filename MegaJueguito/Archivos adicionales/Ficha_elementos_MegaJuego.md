@@ -137,7 +137,7 @@ Esto es importante porque las fichas visuales iniciales eran V1 y algunas reacci
 | **Hielo** | Aplicación Helado; puede culminar en Congelado, Escarcha o interacciones de control. |
 | **Fuego** | Marca de Fuego; es una fuente principal de daño en reacciones. |
 | **Electricidad** | Marca de Electricidad; se combina con Fuego, Agua, Hielo, Naturaleza y Éter según sus reglas. |
-| **Naturaleza** | Función amplificadora; Enredado puede evolucionar a Enredo Corrupto. Naturaleza y Viento no reaccionan entre sí y pueden coexistir. |
+| **Naturaleza** | Función amplificadora; Enredado puede evolucionar a Enredo Corrupto. Naturaleza + Viento tiene una reacción; su nombre, condición y efecto están pendientes de registrar. |
 | **Viento** | Sin marca elemental previa, su anomalía genera Vórtice; luego puede pasar a Vórtice Etéreo y a Huracanes. |
 | **Éter** | Soporte que genera cargas etéreas; la quinta aplicación tras cuatro cargas activa Corrupción. Puede coexistir con Naturaleza y Viento. |
 | **Lumen** | Soporte y estado purificado del Éter; aplica Purificación. Su ficha debe separar sus interacciones con Agua/Fuego de las otras interacciones aún por especificar. |
@@ -153,7 +153,7 @@ Cuando el botón **“Ver interacciones”** está activo:
 - Mostrar objetivos afectados: objetivo principal, adyacentes o todos los usuarios del campo.
 - Indicar explícitamente los retrasos de acción como cambios de AV, sin sugerir que se pierde el turno.
 - Advertir si los números son provisionales.
-- Para Naturaleza + Viento, mostrar **“Sin reacción directa; pueden coexistir”**.
+- Para Naturaleza + Viento, mostrar que existe una reacción y marcar como pendientes su nombre, condición y efecto.
 - Para Éter y Viento, mostrar la secuencia que transforma Vórtice en Vórtice Etéreo antes de crear Huracanes.
 - Para Lumen, mantener separadas Agua Bendita, Fuego Fatuo y Purificación.
 

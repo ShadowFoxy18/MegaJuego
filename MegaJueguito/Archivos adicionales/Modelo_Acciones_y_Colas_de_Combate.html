@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MegaJuego — modelo de acciones de combate</title>
+<style>
+:root{color-scheme:dark;--bg:#11121b;--panel:#1b1d2a;--line:#34364a;--text:#f3f1ff;--muted:#b6b4c9;--violet:#bc83ff;--cyan:#63dcd1;--amber:#ffcd70;--red:#ff7d91}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#252039 0,#11121b 55%);color:var(--text);font:16px/1.6 Inter,Segoe UI,system-ui,sans-serif}main{max-width:1000px;margin:auto;padding:48px 24px 70px}h1{font-size:clamp(2rem,5vw,3.4rem);line-height:1.1;margin:0 0 12px;letter-spacing:-.04em}h2{margin-top:38px;font-size:1.45rem}p{color:var(--muted);margin:.5rem 0 1rem}.eyebrow{text-transform:uppercase;letter-spacing:.16em;color:var(--violet);font-size:.78rem;font-weight:800}.intro{font-size:1.12rem;max-width:760px}.panel{background:linear-gradient(145deg,#202231,#191a26);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 16px 44px #0003}.flow{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}.lane{border:1px solid var(--line);border-radius:16px;padding:18px;background:#141620}.lane h3{margin:0 0 10px}.badge{display:inline-flex;border-radius:99px;padding:3px 10px;font-size:.76rem;font-weight:800;letter-spacing:.04em;margin-right:5px}.normal{background:#43325d;color:#e4cbff}.queued{background:#164b4c;color:#b7fff5}.priority{background:#582f24;color:#ffe1a5}.steps{display:grid;gap:10px}.step{background:#222432;border:1px solid var(--line);padding:14px 16px;border-radius:12px;position:relative}.step strong{color:var(--text)}.step span{color:var(--muted)}.arrow{text-align:center;color:#87869c;font-size:1.2rem;line-height:1}.split{display:grid;grid-template-columns:1fr 1fr;gap:14px}.note{border-left:3px solid var(--cyan);padding:10px 14px;background:#141b20;border-radius:0 10px 10px 0;color:var(--muted)}.warn{border-left-color:var(--amber);background:#211d16}.matrix{width:100%;border-collapse:collapse;margin:14px 0}.matrix th,.matrix td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}.matrix th{color:#ded0ff;font-size:.9rem}.matrix td{color:var(--muted)}.pill{color:var(--cyan);font-weight:750}.small{font-size:.86rem}.footer{margin-top:36px;border-top:1px solid var(--line);padding-top:16px;color:#9795aa}.footer a{color:#c9a6ff}.timeline{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:18px 0}.timeline div{background:#252638;border:1px solid var(--line);padding:10px 13px;border-radius:10px}.timeline b{color:#fff}.timeline i{font-style:normal;color:var(--violet);font-size:1.3rem}@media(max-width:700px){.flow,.split{grid-template-columns:1fr}main{padding:32px 16px}}
+</style>
+</head>
+<body><main>
+<div class="eyebrow">MegaJuego · diseño de combate</div>
+<h1>Acciones y orden de resolución</h1>
+<p class="intro">La iniciativa normal sigue el AV. Las reacciones pueden generar acciones adicionales: algunas esperan su orden; las prioritarias interrumpen y actúan al instante.</p>
+
+<section class="panel" aria-label="Flujo general">
+<h2 style="margin-top:0">Flujo propuesto</h2>
+<div class="timeline"><div><b>AV más bajo</b><br><span class="small">elige actor normal</span></div><i>→</i><div><b>Acción normal</b><br><span class="small">se resuelve</span></div><i>→</i><div><b>Prioridades</b><br><span class="small">inmediatas</span></div><i>→</i><div><b>Adicionales FIFO</b><br><span class="small">antes del siguiente AV</span></div><i>→</i><div><b>Siguiente AV</b></div></div>
+<div class="flow">
+<article class="lane"><h3><span class="badge normal">NORMAL</span> Cola principal</h3><div class="steps"><div class="step"><strong>Un combatiente</strong><br><span>Su posición depende de Velocidad y AV.</span></div><div class="arrow">↓</div><div class="step"><strong>Hace su acción normal</strong><br><span>Al terminar se calcula su próxima posición.</span></div></div></article>
+<article class="lane"><h3><span class="badge queued">ADICIONAL · SIN PRIORIDAD</span></h3><div class="steps"><div class="step"><strong>Se añade al final</strong><br><span>Respeta el orden de creación (FIFO).</span></div><div class="arrow">↓</div><div class="step"><strong>Espera al cierre de la acción actual</strong><br><span>Se resuelve antes de seleccionar otro AV.</span></div></div></article>
+<article class="lane"><h3><span class="badge priority">ADICIONAL · CON PRIORIDAD</span></h3><div class="steps"><div class="step"><strong>Interrumpe al generarse</strong><br><span>Se resuelve en el punto de interrupción.</span></div><div class="arrow">↓</div><div class="step"><strong>Luego se reanuda lo suspendido</strong><br><span>La prioridad no cambia el AV por sí sola.</span></div></div></article>
+<article class="lane"><h3><span class="badge queued">EFECTO AUTÓNOMO</span> Reloj separado</h3><div class="steps"><div class="step"><strong>Granizo Etéreo llega a su tick</strong><br><span>Su ciclo no pertenece al usuario afectado.</span></div><div class="arrow">↓</div><div class="step"><strong>Genera una resolución periódica</strong><br><span>Un estado aplicado no elimina el efecto.</span></div></div></article>
+</div></section>
+
+<h2>Cómo encaja con Star Rail</h2>
+<p>La inspiración es separar la línea de acciones ordenadas por AV de los mecanismos que actúan fuera de ella. MegaJuego añade su propia cola FIFO de adicionales sin prioridad y una vía de prioridad inmediata. La prioridad define <em>cuándo</em> ocurre la acción; no significa automáticamente más daño.</p>
+
+<h2>Ejemplo: Huracán Etéreo</h2>
+<div class="panel"><p>El Huracán Etéreo reparte 5 instancias. Si un impacto encuentra otra marca elemental, resuelve la reacción correspondiente y genera 3 instancias de un Huracán normal del elemento que tenía el objetivo.</p><div class="note">Si el Huracán normal derivado se clasifica como adicional, sus 3 instancias pueden resolverse dentro de una única entrada de cola. No genera Huracanes nuevos: la cadena termina ahí.</div><p class="small">La prioridad de ese Huracán derivado aún es una decisión de diseño.</p></div>
+
+<h2>Reglas que protegen el orden</h2>
+<table class="matrix"><thead><tr><th>Regla propuesta</th><th>Resultado esperado</th></tr></thead><tbody>
+<tr><td>Una adicional no reinicia el AV normal de su fuente</td><td>Una reacción no regala turnos normales ni adelanta la próxima acción por accidente.</td></tr>
+<tr><td>Adicionales sin prioridad se procesan FIFO antes del siguiente AV</td><td>Orden visible y predecible para combos y efectos disparados.</td></tr>
+<tr><td>Una prioridad interrumpe y luego devuelve el control</td><td>El evento urgente sucede ya sin perder el punto de reanudación.</td></tr>
+<tr><td>Adicionales no descuentan duraciones de turnos normales salvo regla explícita</td><td>Una cascada no consume de golpe los estados del combate.</td></tr>
+<tr><td>Los ticks autónomos llevan reloj propio</td><td>Granizo sigue existiendo aunque cambien los estados del enemigo.</td></tr>
+</tbody></table>
+
+<h2>Decisiones todavía abiertas</h2>
+<div class="split"><div class="note warn">¿Qué reacciones crean adicionales prioritarias y cuáles esperan en FIFO? Hay que etiquetar cada una.</div><div class="note warn">¿Tres instancias de un Huracán son una entrada con impactos múltiples o tres acciones independientes?</div><div class="note warn">¿Qué pasa si un objetivo cae antes de que una adicional en espera lo alcance?</div><div class="note warn">¿El reloj autónomo avanza por AV global, turnos normales o pulsos propios del efecto?</div></div>
+
+<div class="footer">Documento visual de diseño, no implementación. Detalle completo en <b>Modelo_Acciones_y_Colas_de_Combate.md</b>.<br>Referencia de turnos extra: <a href="https://wiki.hoyolab.com/pc/hsr/entry/4842?lang=en-us">HoYoWiki de Honkai: Star Rail</a>. Guía de AV: <a href="https://www.hoyolab.com/article/19822028">HoYoLAB</a>.</div>
+</main></body></html>

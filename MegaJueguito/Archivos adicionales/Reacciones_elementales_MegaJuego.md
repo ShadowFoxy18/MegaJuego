@@ -129,7 +129,7 @@ Los multiplicadores de golpe no son lo mismo que `ReactionMultiplier` de la fór
 | **Agua + Fuego** | **Vaporizado**, Multiplicativa **×1,5** al golpe detonador. Limpia las dos aplicaciones. |
 | **Agua + Electricidad** | **Sobrecarga**. Mientras dura, el enemigo queda afectado por ambas aplicaciones y se retrasa su siguiente acción mediante AV. La duración final de la reacción y la magnitud del retraso quedan pendientes. |
 | **Agua + Naturaleza** | **Florecimiento**. El objetivo conserva ambas aplicaciones; a sus usuarios adyacentes se les aplica Enredado. |
-| **Agua + Éter** | **Pompa**. Mientras está en Pompa, el objetivo no tiene Mojado. Puede recibir hasta 3 cargas de Agua. Al explotar, recibe daño considerable y se retrasa su acción; el mismo efecto alcanza a sus adyacentes y aplica Mojado a esos usuarios. Falta fijar valores y duración. |
+| **Agua + Éter** | **Prisión Etérea**. El objetivo deja de tener Mojado, puede recibir hasta 3 cargas de Agua y, al explotar, recibe daño y retraso; el efecto alcanza a sus adyacentes y les aplica Mojado. Daño y duración pendientes. |
 | **Agua + Lumen** | **Agua Bendita**. Limpia problemas de estado y aplicaciones elementales, y cura según parte de la Maestría del aplicador. Las cargas y la curación se llaman **Santa Cura**. Contra un usuario etéreo limpia sus elementos y le causa daño según Maestría durante los turnos activos. |
 
 ### Hielo
@@ -169,7 +169,7 @@ Los multiplicadores de golpe no son lo mismo que `ReactionMultiplier` de la fór
 
 | Interacción | Resultado y efecto conocido |
 |---|---|
-| **Naturaleza + Viento** | **No reaccionan entre sí**. Pueden coexistir en el mismo objetivo junto con Éter. La propuesta anterior “Esporas Errantes” queda descartada como reacción vigente. |
+| **Naturaleza + Viento** | No hay reacción directa entre ambos elementos. Sus marcas pueden coexistir. Si un Huracán lleva otro elemento, ese elemento puede resolver su reacción con Naturaleza y con Viento/Vórtice por separado. |
 | **Enredado + Corrupción/Éter** | **Enredo Corrupto**. Reduce Ataque y Defensa y vuelve al afectado vulnerable a Fuego y Naturaleza. Esas vulnerabilidades no eliminan Enredo Corrupto. |
 | **Enredo Corrupto + Hielo** | Aumenta el daño de los Pétalos Escarchados. Falta definir cuánto y cómo se acumula. |
 | **Enredo Corrupto + Electricidad** | Paraliza al afectado, retrasa su siguiente acción mediante AV y aumenta la probabilidad crítica del atacante que provocó la reacción. |
@@ -195,7 +195,7 @@ La secuencia acordada depende del orden. Viento no aplica directamente un Hurac�
 | Huracán Etéreo | 5 impactos | Puede alcanzar a todos los usuarios del equipo objetivo, cuyo máximo previsto es 5. |
 | Huracán Etéreo adicional | 2 impactos adicionales al 50% del daño normal | No se vuelve a replicar. |
 
-Los Huracanes impregnan con su elemento a los usuarios alcanzados. Por eso pueden causar reacciones nuevas durante la misma acción. Se registra cada reacción por impacto y por objetivo. Ejemplo acordado: un Huracán Etéreo de Fuego que alcanza a un usuario con marca de Agua provoca Vaporizado en ese usuario —y el golpe de ese Huracán recibe el aumento correspondiente—; después crea un Huracán Etéreo de Agua. Las dos instancias adicionales al 50% nunca inician otra replicación.
+Los Huracanes impregnan con su elemento a los usuarios alcanzados. Por eso pueden causar reacciones nuevas durante la misma acción. Se registra cada interacción por impacto y por objetivo: si el usuario tiene marcas compatibles de Naturaleza y Viento/Vórtice, el elemento del Huracán puede resolver una interacción con cada una; esto no crea una reacción directa Naturaleza + Viento. Ejemplo: un Huracán Etéreo de Fuego que alcanza a un usuario con Agua provoca Vaporizado y crea 3 instancias de un Huracán normal de Agua. Los Huracanes normales derivados no generan instancias adicionales. Las 2 instancias extra del Huracán Etéreo al 50% tampoco se replican.
 
 Vórtice se ha documentado con **2 turnos** y Vórtice Etéreo con **3** en el esquema actual. Conviene tratarlas como duraciones provisionales hasta que se confirmen expresamente.
 
@@ -250,6 +250,10 @@ La paleta se guía por las capturas que compartió el usuario. Los colores de ab
 
 ## 9. Notas para programarlo en Unity
 
+### Resolución de acciones
+
+El flujo de combate distingue la cola normal ordenada por AV, las acciones adicionales sin prioridad (cola FIFO) y las adicionales con prioridad (interrupción inmediata). El detalle y las decisiones abiertas están en [Modelo de acciones y colas de combate](Modelo_Acciones_y_Colas_de_Combate.md). Una reacción solo crea una acción adicional si genera una resolución independiente; los multiplicadores del impacto detonador se aplican dentro de la acción actual. Los efectos periódicos autónomos, como Granizo Etéreo, conservan su propio reloj.
+
 1. **Separar conceptos:** elemento del ataque, marca aplicada, anomalía/reacción activa y efecto temporal son datos distintos.
 2. **La aplicación debe ser explícita:** una acción informa si aplica una marca; el cálculo de daño elemental no la añade por defecto.
 3. **Resolver por fases:** capturar estados anteriores al golpe, detectar reacciones, calcular daño, aplicar limpieza/estados/AV y luego procesar eventos secundarios.
@@ -298,7 +302,7 @@ Es un esquema conceptual para facilitar la implementación; los nombres de clase
 ## 11. Decisiones anteriores que ya no son vigentes
 
 - La infografía antigua que presentaba Aditiva, Multiplicativa, Transformativa y Limpiadora como cuatro tipos exclusivos no es la fuente de las definiciones actuales. Se conservan cuatro comportamientos para catalogar; Limpiadora se puede combinar con otro tipo.
-- La propuesta “Esporas Errantes” para Naturaleza + Viento queda descartada: la regla más reciente dice que Naturaleza y Viento no reaccionan y pueden coexistir.
+- No hay reacción directa entre Naturaleza y Viento. El elemento de un Huracán sí puede interactuar por separado con Naturaleza y con Viento/Vórtice en el objetivo.
 - Los nombres de fichas V1 como Bloom, Quemado, Torbellino, Raíz Corrupta o la variante previa de Fuego Fatuo no sustituyen automáticamente las reglas nuevas de este documento.
 
 
