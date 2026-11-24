@@ -56,6 +56,38 @@ Cola normal por AV
   -> siguiente acción normal por AV
 ~~~
 
+## 3.1 Unidad de tiempo y objetivo de acciones por turno
+
+Se establece para el diseño del combate que un **turno de referencia equivale a 100 AV**. Esta ventana sirve para comunicar, balancear y visualizar cuántas acciones normales puede realizar un personaje; no implica por sí sola que todos los combatientes actúen una única vez ni cambia la cola principal por AV.
+
+La progresión de inicio indicada para los personajes es **Bardo: 3**, **Maga: 2** y **Guerrero: 1** acción normal por cada 100 AV. Este orden fija su velocidad inicial: Bardo > Maga > Guerrero. Como orientación general previa, se había planteado llegar a unas 5–6 acciones por turno al final; los valores de Medio y Final quedan configurables y deben revisarse con el balance de daño.
+
+Para visualizarlo con la escala de `TurnQueue` existente (`BASE_ACTION_GAUGE = 10000`), la relación de referencia es `acciones por 100 AV = SPD / 100`. Así, el orden de inicio equivale a Bardo SPD 300, Maga SPD 200 y Guerrero SPD 100. El AV entre acciones se obtiene como `100 / accionesPorTurno`; su equivalente sobre la escala de 10000 es `10000 / SPD`.
+
+Las tasas fraccionarias representan un promedio y se distribuyen entre ventanas enteras. Por ejemplo, 5,5 acciones por turno se reflejan como turnos alternos de 5 y 6 acciones, no como media acción ejecutada. Las acciones siguen ocurriendo en la cola normal según AV; el turno de 100 AV es una unidad de referencia para medir la frecuencia.
+
+El Excel presenta una curva de daño distinta por personaje y fase. La velocidad no se deduce automáticamente de ese daño: el daño total por ventana también depende de cuántas acciones se permiten. Para que la curva de daño por golpe no se multiplique sin control por una alta velocidad, la propuesta inicial deja progresar más a Maga y menos al Guerrero, cuyo daño por golpe es mayor en el Excel.
+
+Valores de partida editables en el artefacto:
+
+| Personaje | Inicio | Medio | Final |
+| --- | ---: | ---: | ---: |
+| Maga | 2 | 4,5 | 6 |
+| Bardo | 3 | 4 | 5,5 |
+| Guerrero | 1 | 3,5 | 5 |
+
+El artefacto `Progresion_AV_Personajes.html` permite ajustar SPD o acciones por 100 AV en Inicio, Medio y Final; cambiar uno actualiza el otro, y guarda las elecciones en el navegador. Las gráficas se recalculan al editar los controles. Los valores de Medio y Final son propuestas de balance que consideran la jerarquía de daño del Excel, no resultados calculados automáticamente a partir de la curva. La gráfica de iniciativa presenta cuatro turnos (400 AV), marca cada momento de acción y ofrece en cada línea el turno, el AV exacto y la diferencia ΔAV desde la acción anterior. Una tercera gráfica compara los momentos de acción de las tres fases dentro de dos turnos (200 AV); el detalle de cada acción muestra también su variación de AV respecto a Inicio. Las acciones adicionales, prioridades, adelantos y retrasos no están incluidas en ese conteo.
+
+Este registro no cambia la implementación actual de Unity: `TurnQueue` conserva su escala hasta que se decida ajustar los scripts y validar cómo la velocidad real de cada personaje debe alcanzar estos rangos.
+
+### Visualización de SPD, acumulación de stats y daño
+
+El artefacto organiza la información en dos pestañas: **SPD** y **Stats**. SPD contiene las acciones normales por fase y tres gráficas elegibles. Stats permite editar los topes finales de Maestría, anomalía, bono elemental, probabilidad crítica y bono crítico por personaje; los valores de cada fase se calculan acumulando esos topes según la fracción del Excel: Inicio 25%, Medio 75% y Final 100%. También se puede ajustar el escalador base de habilidad.
+
+El cálculo usa las fórmulas de `Progresion_DPS_MegaJuego.xlsx`: factor de Maestría/anomalía, factor elemental, probabilidad y bono crítico, y daño base. El daño real por acción se compara con el objetivo por acción de cada fase (1.000, 15.000 y 40.000). Para comparar con SPD, el artefacto muestra DPS de referencia por 100 AV como `daño por acción × acciones por 100 AV`, tanto para el valor calculado como para el objetivo. También presenta el escalador base requerido para alcanzar el objetivo con los stats elegidos.
+
+Este DPS es el resultado del modelo del Excel, no una medición del combate ejecutándose en Unity. `SkillData` está vacío y `Character.GetAttackStats()` aún asigna escalador y multiplicadores provisionales; antes de llamarlo DPS real del juego habrá que implementar esas entradas y validar el cálculo contra `DamageManager`.
+
 ## 4. Ejemplos del sistema
 
 ### Huracán Etéreo

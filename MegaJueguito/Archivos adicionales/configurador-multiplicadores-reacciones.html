@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Configurador interactivo para explorar el escalado por Maestría de los multiplicadores de las reacciones de MegaJuego.">
+<title>Configurador de multiplicadores — MegaJuego</title>
+<style>
+:root{color-scheme:dark;--bg:#11121a;--surface:#1b1d29;--surface2:#222433;--border:#393b4c;--text:#f4f2fb;--muted:#b6b4c4;--accent:#c190ff;--accent2:#72e2d2;--warning:#ffd17c;--danger:#ff9aa9;--series:#b888ff;--grid:#363848}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#302545 0,transparent 52%),var(--bg);color:var(--text);font:16px/1.5 Inter,"Segoe UI",system-ui,sans-serif}main{max-width:1120px;margin:0 auto;padding:36px 22px 64px}h1{font-size:clamp(2rem,4vw,3rem);letter-spacing:-.04em;line-height:1.1;margin:0 0 10px}h2{font-size:1.2rem;margin:0 0 12px}p{margin:6px 0;color:var(--muted)}.eyebrow{color:var(--accent2);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:.75rem}.lede{font-size:1.04rem;max-width:840px;margin-bottom:24px}.panel{background:linear-gradient(145deg,#1c1e2b,#171923);border:1px solid var(--border);border-radius:18px;padding:20px;margin:18px 0}.controls{display:grid;grid-template-columns:minmax(240px,1.5fr) repeat(2,minmax(150px,.7fr));gap:20px;align-items:end}.field label,.field .label{display:block;font-size:.84rem;color:#d7d4e4;margin-bottom:7px;font-weight:650}.readout{font-size:1.3rem;color:var(--text);font-variant-numeric:tabular-nums;font-weight:750}.readout small{font-size:.8rem;color:var(--muted);font-weight:500}.mastery-row{display:flex;gap:12px;align-items:center}.mastery-row input[type=range]{flex:1;min-width:120px}.mastery-row input[type=number]{width:105px}.field input[type=number]{width:100%}input[type=number]{background:#11131d;border:1px solid #505267;color:var(--text);border-radius:9px;padding:10px 11px;font:inherit;font-variant-numeric:tabular-nums}input[type=range]{accent-color:var(--accent);height:24px}.formula{background:#11131d;border-radius:10px;padding:12px 14px;color:#e7d4ff;font-family:ui-monospace,Consolas,monospace;overflow-wrap:anywhere}.hint{font-size:.85rem}.warning{color:var(--warning)}.reaction-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 12px}.reaction-option{display:grid;grid-template-columns:18px 1fr;gap:10px;align-items:start;padding:11px 10px;border-radius:10px;background:#151722;min-height:100px}.reaction-option input{margin-top:4px;accent-color:var(--accent);width:17px;height:17px;flex:none}.reaction-option b{display:block;font-size:.91rem}.reaction-option small{display:block;color:var(--muted);font-size:.76rem;line-height:1.35}.reaction-option em{display:block;color:#d8d4e5;font-size:.78rem;line-height:1.35;font-style:normal;margin-top:5px}.section-label{margin:22px 0 8px;color:#d8c9f0;font-weight:700;font-size:.88rem}.chart-list,.manager-list{display:grid;gap:14px}.reaction-card{background:linear-gradient(145deg,#1b1d29,#171923);border:1px solid var(--border);border-radius:16px;padding:18px}.card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap}.card-head h3{margin:0;font-size:1.1rem}.tag{display:inline-block;color:#d9c4ff;background:#35284b;padding:2px 9px;border-radius:99px;font-size:.73rem;margin-top:5px}.known{color:#adf3dd;background:#173b37}.base-control{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:.82rem}.base-control input{width:104px}.statline{font-size:.9rem;margin-top:10px;color:#e9e4f2}.statline strong{color:white;font-variant-numeric:tabular-nums}.chart-wrap{margin-top:12px}.chart{display:block;width:100%;height:auto;overflow:visible}.chart text{fill:var(--muted);font-family:inherit;font-size:12px}.chart .axis{stroke:#828397;stroke-width:1}.chart .gridline{stroke:var(--grid);stroke-width:1}.chart .curve{fill:none;stroke:var(--series);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.chart .cursor{stroke:var(--accent2);stroke-width:1.5;stroke-dasharray:5 5}.chart .point{fill:var(--accent2);stroke:#10121b;stroke-width:3}.chart .one-line{stroke:var(--warning);stroke-width:1.2;stroke-dasharray:4 5;opacity:.7}.chart .one-label{fill:var(--warning)}.empty{padding:34px 16px;text-align:center;border:1px dashed #515366;border-radius:14px;color:var(--muted)}.footer{margin-top:28px;border-top:1px solid var(--border);padding-top:16px;color:#9998aa;font-size:.82rem}.footer a{color:#ceb1ff}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+ .reaction-select-label{display:block;color:#d7d4e4;font-size:.86rem;font-weight:650;margin:16px 0 7px}#reactionSelect{width:100%;min-height:46px;padding:10px 12px;border:1px solid #505267;border-radius:10px;background:#11131d;color:var(--text);font:inherit}.selected-line{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:14px 0}.element-tag{display:inline-flex;align-items:center;gap:7px;border-radius:999px;padding:5px 10px;background:#302b38;font-size:.82rem}.swatch{width:10px;height:10px;border-radius:50%;background:var(--element-color)}.reaction-breakdown{border-top:1px solid var(--border);padding-top:15px}.reaction-breakdown h3{font-size:1.14rem;margin:0 0 8px}.reaction-breakdown p{margin:7px 0}.reaction-breakdown ul{margin:7px 0 0;padding-left:20px;color:var(--muted)}.reaction-breakdown li{margin:5px 0}.breakdown-accent{border-left:3px solid var(--accent);padding-left:12px}.breakdown-meta{display:flex;flex-wrap:wrap;gap:7px;margin:8px 0 12px}.breakdown-badge{display:inline-block;border-radius:999px;background:#302b38;padding:3px 9px;font-size:.76rem;color:#e6d9f7}.breakdown-status{color:var(--accent2);font-size:.86rem}
+@media(max-width:760px){main{padding:28px 15px 48px}.controls{grid-template-columns:1fr 1fr}.controls .mastery-field{grid-column:1/-1}.reaction-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:480px){.controls{grid-template-columns:1fr}.controls .mastery-field{grid-column:auto}.reaction-grid{grid-template-columns:1fr}.mastery-row{flex-wrap:wrap}.mastery-row input[type=range]{order:2;flex-basis:100%}.base-control{width:100%;justify-content:space-between}}
+</style>
+</head>
+<body>
+<main>
+  <div class="eyebrow">MegaJuego · balance de reacciones</div>
+  <h1>Multiplicador según Maestría</h1>
+  <p class="lede">Elige una reacción y consulta su combinación, activación y efectos. Ajusta la Maestría y sus valores para ver cómo crece el factor desde ×1.</p>
+
+  <section class="panel" aria-label="Desglose de reacciones">
+    <h2>1. Desglose de reacciones</h2>
+    <p class="hint">Elige una reacción para consultar su ficha completa, como en el artefacto de elementos.</p>
+    <label class="reaction-select-label" for="reactionSelect">Reacción a configurar</label>
+    <select id="reactionSelect" aria-label="Selecciona una reacción"></select>
+    <div id="reactionSelection" class="selected-line" aria-label="Combinación de la reacción"></div>
+    <div id="reactionOutput" class="reaction-breakdown" aria-live="polite"></div>
+  </section>
+
+  <section class="panel" aria-label="Gestor de valores">
+    <h2>2. Gestor de valores</h2>
+    <p class="hint">La Maestría y la curva se comparten. El multiplicador base de cada reacción escala el bono que se suma a ×1.</p>
+    <div class="controls">
+      <div class="field mastery-field">
+        <label for="masteryRange">Maestría actual <span class="readout"><span id="masteryValue">500</span> <small>/ 1300</small></span></label>
+        <div class="mastery-row">
+          <input id="masteryRange" type="range" min="0" max="1300" step="1" value="500" aria-label="Maestría de 0 a 1300">
+          <input id="masteryNumber" type="number" min="0" max="1300" step="1" value="500" aria-label="Valor numérico de Maestría">
+        </div>
+      </div>
+      <div class="field"><label for="numerator">Numerador</label><input id="numerator" type="number" min="0" max="20" step="0.05" value="0.5"></div>
+      <div class="field"><label for="denominator">Denominador</label><input id="denominator" type="number" min="0" max="10000" step="10" value="250"></div>
+    </div>
+    <div class="formula" style="margin-top:16px">Factor = 1 + Multiplicador base × ((Maestría × Numerador) / (Maestría + Denominador))</div>
+    <p class="hint">Con Numerador 0,5 y Denominador 250, Maestría 0 siempre da ×1. A Maestría 500, el término de escalado vale 1/3. Para Vaporizado, el coeficiente base 1,5 da ×1,5 en ese punto.</p>
+    <div class="section-label">Multiplicador base y resultado actual</div>
+    <div class="manager-list" id="manager"></div>
+  </section>
+
+  <section class="panel" aria-live="polite" aria-label="Gráficas por reacción">
+    <h2>3. Gráfica de escalado</h2>
+    <p class="hint">La curva muestra el multiplicador entre 0 y 1300 de Maestría. La línea turquesa marca el valor actual.</p>
+    <div class="chart-list" id="charts"></div>
+  </section>
+
+  <footer class="footer">
+    Referencias anteriores del catálogo: Vaporizado ×1,5; Derretido ×2,5; Plasma ×1,8; Quebrahielo ×1,3. Se han convertido en coeficientes iniciales para que cada reacción conserve su referencia a 500 de Maestría con Numerador 0,5 y Denominador 250. El factor final cambia con la fórmula nueva. Los valores introducidos para las otras reacciones son exploratorios. Esta herramienta no modifica el GDD ni los scripts.
+  </footer>
+</main>
+
+<script>
+(() => {
+  const reactions = [
+    {id:'vaporizado',name:'Vaporizado',pair:'Agua + Fuego',tags:['Agua','Fuego'],type:['Multiplicativa','Limpiadora'],trigger:'Agua y Fuego aplicados al mismo objetivo.',effects:['Escala el golpe detonador con Maestría; referencia anterior ×1,5.','Limpia ambas aplicaciones.'],duration:'Instantánea en el golpe detonador.',status:'Referencia anterior ×1,5',base:1.5,known:true,referenceFactor:1.5},
+    {id:'derretido',name:'Derretido',pair:'Hielo + Fuego',tags:['Hielo','Fuego'],type:['Multiplicativa'],trigger:'Hielo + Fuego.',effects:['Escala el golpe detonador con Maestría; referencia anterior ×2,5.'],duration:'Instantánea en el golpe detonador.',status:'Referencia anterior ×2,5',base:4.5,known:true,referenceFactor:2.5},
+    {id:'plasma',name:'Plasma',pair:'Fuego + Electricidad',tags:['Fuego','Electricidad'],type:['Multiplicativa','Limpiadora'],trigger:'Fuego + Electricidad.',effects:['Escala el golpe detonador con Maestría; referencia anterior ×1,8.','Alcanza al objetivo y a sus adyacentes.','Limpia ambas aplicaciones.'],duration:'Instantánea en el golpe detonador.',status:'Referencia anterior ×1,8',base:2.4,known:true,referenceFactor:1.8},
+    {id:'quebrahielo',name:'Quebrahielo',pair:'Físico contundente + Congelado',tags:['Físico','Congelado'],type:['Multiplicativa'],trigger:'Una acción Física contundente golpea a un objetivo con Congelado.',effects:['Escala con Maestría el daño del golpe contundente rompedor; referencia anterior ×1,3.'],duration:'Instantánea en el golpe rompedor.',status:'Referencia anterior ×1,3',base:0.9,known:true,referenceFactor:1.3},
+    {id:'congelado',name:'Congelado',pair:'Agua + Hielo',tags:['Agua','Hielo'],type:['Transformativa'],trigger:'El objetivo tiene Moja/Mojado y recibe Hielo.',effects:['Retrasa su siguiente acción mediante AV.','Al llegar su turno, termina Congelado y queda con Helado.'],duration:'Retraso y duración exactos pendientes.',status:'Registrada · balance pendiente'},
+    {id:'sobrecarga',name:'Sobrecarga',pair:'Agua + Electricidad',tags:['Agua','Electricidad'],type:['Transformativa'],trigger:'Agua + Electricidad.',effects:['Mantiene ambas aplicaciones mientras dura.','Retrasa la siguiente acción del enemigo mediante AV.'],duration:'Duración y retraso pendientes.',status:'Registrada · balance pendiente'},
+    {id:'florecimiento',name:'Florecimiento',pair:'Agua + Naturaleza',tags:['Agua','Naturaleza'],type:['Transformativa'],trigger:'Agua + Naturaleza.',effects:['El objetivo conserva ambas aplicaciones.','Aplica Enredado a los usuarios adyacentes.'],duration:'Valores pendientes.',status:'Registrada'},
+    {id:'prision',name:'Prisión Etérea',pair:'Agua + Éter',tags:['Agua','Éter'],type:['Transformativa'],trigger:'Agua + Éter.',effects:['El portador deja de tener Mojado mientras está en Prisión Etérea.','Admite hasta 3 cargas de Agua.','Al explotar, daña y retrasa al objetivo; los adyacentes reciben Mojado.'],duration:'Daño y duración pendientes.',status:'Nombre elegido · balance pendiente'},
+    {id:'agua-bendita',name:'Agua Bendita · Santa Cura',pair:'Agua + Lumen',tags:['Agua','Lumen'],type:['Transformativa','Limpiadora'],trigger:'Agua + Lumen.',effects:['Limpia problemas de estado y aplicaciones elementales.','Cura según parte de la Maestría del aplicador.','Contra un ser etéreo, limpia sus elementos y le causa daño durante los turnos activos.'],duration:'Cargas y valores de curación/daño pendientes.',status:'Registrada'},
+    {id:'superconductor',name:'Superconductor',pair:'Hielo + Electricidad',tags:['Hielo','Electricidad'],type:['Transformativa'],trigger:'Hielo + Electricidad.',effects:['Aplica Electricidad a los adyacentes.','Aumenta el daño Físico y Eléctrico que reciben.','Retrasa su siguiente acción mediante AV.'],duration:'Magnitudes pendientes; precisar Resistencia frente a PEN a Res.',status:'Pendiente de precisión'},
+    {id:'escarcha',name:'Escarcha',pair:'Hielo + Naturaleza',tags:['Hielo','Naturaleza'],type:['Transformativa'],trigger:'Hielo + Naturaleza.',effects:['Cuando el afectado actúa, aparece un Pétalo Escarchado que causa daño de Hielo.','Al llegar a 3 cargas, explota y daña al objetivo y a sus adyacentes.'],duration:'Daño y valores pendientes.',status:'Pendiente de balance'},
+    {id:'granizo',name:'Granizo Etéreo',pair:'Hielo + Éter',tags:['Hielo','Éter'],type:['Transformativa · Autónoma'],trigger:'Hielo + Éter.',effects:['Afecta a todos los usuarios del campo.','Reduce su Velocidad, causa daño durante varios turnos y aplica Helado.','Es un efecto autónomo: los estados del usuario no lo rompen.'],duration:'Magnitudes y duración pendientes.',status:'Efecto autónomo confirmado'},
+    {id:'calcinado',name:'Calcinado',pair:'Fuego + Naturaleza',tags:['Fuego','Naturaleza'],type:['Transformativa'],trigger:'Fuego + Naturaleza.',effects:['Retrasa la siguiente acción.','El daño propuesto depende del AV transcurrido y de Maestría.'],duration:'X y conversión de AV a daño pendientes.',status:'Pendiente de balance'},
+    {id:'karmico',name:'Fuego Kármico',pair:'Fuego + Éter',tags:['Fuego','Éter'],type:['Transformativa · Periódica'],trigger:'Fuego + Éter.',effects:['Llama azul inextinguible que inflige daño de Fuego.','No se limpia; termina al agotar su duración.'],duration:'3 turnos; cantidad de daño pendiente.',status:'Duración registrada'},
+    {id:'fatuo',name:'Fuego Fatuo',pair:'Fuego + Lumen',tags:['Fuego','Lumen'],type:['Transformativa','Limpiadora'],trigger:'Fuego + Lumen.',effects:['Limpia problemas de estado y potencia movimientos de Fuego.','Quien intente golpear al afectado recibe Fuego y una carga etérea.','Contra seres etéreos activa una regla especial de daño.'],duration:'Valores y reparto pendientes.',status:'Registrada · detalles pendientes'},
+    {id:'intensificado',name:'Intensificado',pair:'Electricidad + Naturaleza',tags:['Electricidad','Naturaleza'],type:['Aditiva'],trigger:'Electricidad + Naturaleza.',effects:['El aplicador obtiene un aumento de Velocidad.','Los siguientes ataques reciben un bono aditivo.'],duration:'Duración y magnitudes pendientes.',status:'Registrada · balance pendiente'},
+    {id:'descarga',name:'Descarga Etérea',pair:'Electricidad + Éter',tags:['Electricidad','Éter'],type:['Transformativa · Periódica'],trigger:'Electricidad + Éter.',effects:['Inflige daño eléctrico durante varios turnos.','Cada impacto aplica Electricidad.'],duration:'Duración y valores pendientes.',status:'Nombre provisional'},
+    {id:'enredo-corrupto',name:'Enredo Corrupto',pair:'Enredado + Corrupción/Éter',tags:['Naturaleza','Corrupción'],type:['Transformativa'],trigger:'Se aplica Corrupción/Éter a un usuario que tiene Enredado.',effects:['Transforma Enredado en Enredo Corrupto.','Reduce Ataque y Defensa y vuelve al afectado vulnerable a Fuego y Naturaleza.','Con Agua puede extender Enredo Corrupto a todos los enemigos.'],duration:'Magnitudes y duración pendientes.',status:'Registrada'},
+    {id:'vortice-etereo',name:'Vórtice Etéreo',pair:'Vórtice + Corrupción/Éter',tags:['Viento','Corrupción'],type:['Transformativa'],trigger:'Se aplica Corrupción/Éter a un usuario que tiene Vórtice.',effects:['Transforma Vórtice en Vórtice Etéreo.','Si también tiene Enredado, ese estado se transforma por separado en Enredo Corrupto.','Puede habilitar Huracanes Etéreos.'],duration:'Duración provisional.',status:'Regla de transformación registrada'}
+  ];
+  const colors={Agua:'#55DCE5',Hielo:'#8797F7',Fuego:'#FF8585',Electricidad:'#FFD966',Naturaleza:'#8DE49A',Viento:'#79D8D2',Éter:'#963DD1',Lumen:'#EBA2FF',Físico:'#AEB7C2',Corrupción:'#6E168F',Congelado:'#83A5FF'};
+  const select=document.getElementById('reactionSelect');
+  const selection=document.getElementById('reactionSelection');
+  const output=document.getElementById('reactionOutput');
+  const range=document.getElementById('masteryRange');
+  const number=document.getElementById('masteryNumber');
+  const masteryValue=document.getElementById('masteryValue');
+  const numeratorInput=document.getElementById('numerator');
+  const denominatorInput=document.getElementById('denominator');
+  const managerRoot=document.getElementById('manager');
+  const chartRoot=document.getElementById('charts');
+  const esc=value=>String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+  const fmt=value=>Number.isFinite(value)?value.toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2}):'—';
+  const readNumber=(input,fallback)=>{const parsed=Number(input.value);return Number.isFinite(parsed)&&parsed>=0?parsed:fallback;};
+  select.innerHTML='<optgroup label="Multiplicativas con referencia previa">'+reactions.filter(item=>item.known).map(item=>`<option value="${item.id}">${esc(item.name)} · ${esc(item.pair)}</option>`).join('')+'</optgroup><optgroup label="Aditivas y transformativas">'+reactions.filter(item=>!item.known).map(item=>`<option value="${item.id}">${esc(item.name)} · ${esc(item.pair)}</option>`).join('')+'</optgroup>';
+  const currentReaction=()=>reactions.find(item=>item.id===select.value)||reactions[0];
+  function calc(mastery,base,numerator,denominator){if(mastery===0)return 1;return 1+base*((mastery*numerator)/(mastery+denominator));}
+  function graph(item,current,base,numerator,denominator){
+    const W=760,H=255,L=62,R=20,T=18,B=44,plotW=W-L-R,plotH=H-T-B;
+    const yAt=x=>calc(x,base,numerator,denominator),currentFactor=yAt(current);
+    const maxValue=Math.max(1.5,yAt(1300),currentFactor,1),yMax=Math.max(1.5,Math.ceil(maxValue*1.12*2)/2);
+    const xPos=x=>L+(x/1300)*plotW,yPos=y=>T+plotH-((y-1)/(yMax-1))*plotH,ticks=[0,250,500,750,1000,1300],grid=[];
+    for(let i=0;i<=4;i++){const value=1+(yMax-1)*i/4,y=yPos(value);grid.push(`<line class="gridline" x1="${L}" y1="${y}" x2="${W-R}" y2="${y}"/><text x="${L-9}" y="${y+4}" text-anchor="end">×${fmt(value)}</text>`);}
+    for(const tick of ticks){const x=xPos(tick);grid.push(`<line class="gridline" x1="${x}" y1="${T}" x2="${x}" y2="${T+plotH}"/><text x="${x}" y="${H-14}" text-anchor="middle">${tick}</text>`);}
+    let d='';for(let x=0;x<=1300;x+=10)d+=(x===0?'M':'L')+xPos(x).toFixed(2)+' '+yPos(yAt(x)).toFixed(2)+' ';
+    const cx=xPos(current),cy=yPos(currentFactor),baseY=yPos(1),oneLine=`<line class="one-line" x1="${L}" y1="${baseY}" x2="${W-R}" y2="${baseY}"/><text class="one-label" x="${W-R-2}" y="${baseY-6}" text-anchor="end">×1 neutral</text>`;
+    return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Gráfica de ${esc(item.name)}: multiplicador frente a Maestría de 0 a 1300"><title>${esc(item.name)}: multiplicador por Maestría</title><desc>El punto muestra Maestría ${current} y factor ×${fmt(currentFactor)}.</desc>${grid.join('')}<line class="axis" x1="${L}" y1="${T}" x2="${L}" y2="${T+plotH}"/><line class="axis" x1="${L}" y1="${T+plotH}" x2="${W-R}" y2="${T+plotH}"/>${oneLine}<path class="curve" d="${d}"/><line class="cursor" x1="${cx}" y1="${T}" x2="${cx}" y2="${T+plotH}"/><circle class="point" cx="${cx}" cy="${cy}" r="6"/><text x="${L+plotW/2}" y="${H-1}" text-anchor="middle">Maestría</text><text transform="translate(16 ${T+plotH/2}) rotate(-90)" text-anchor="middle">Multiplicador</text></svg>`;
+  }
+  function render(){
+    const item=currentReaction(),current=Number(range.value)||0,numerator=readNumber(numeratorInput,0.5),denominator=readNumber(denominatorInput,250),base=Number.isFinite(item.base)?item.base:null;
+    masteryValue.textContent=current.toLocaleString('es-ES');if(number.value!==String(current))number.value=String(current);
+    selection.innerHTML=item.tags.map(tag=>`<span class="element-tag" style="--element-color:${colors[tag]||'#c190ff'}"><span class="swatch"></span>${esc(tag)}</span>`).join('<span aria-hidden="true">+</span>');
+    const factorState=item.known?`Coeficiente ${fmt(item.base)} · referencia ×${fmt(item.referenceFactor)} a Maestría 500`:base===null?'Factor multiplicativo pendiente':'Coeficiente exploratorio ×'+fmt(base);
+    output.innerHTML=`<div class="breakdown-accent"><h3>${esc(item.name)}</h3><div class="breakdown-meta">${item.type.map(type=>`<span class="breakdown-badge">${esc(type)}</span>`).join('')}<span class="breakdown-badge">${esc(item.duration)}</span></div><p><strong>Combinación:</strong> ${esc(item.pair)}</p><p><strong>Activación:</strong> ${esc(item.trigger)}</p><strong>Efectos</strong><ul>${item.effects.map(effect=>`<li>${esc(effect)}</li>`).join('')}</ul><p class="breakdown-status">${esc(item.status)} · ${esc(factorState)}</p></div>`;
+    const factor=base===null?null:calc(current,base,numerator,denominator);
+    const readout=base===null?'<p class="statline warning">Sin multiplicador base: introduce un valor para habilitar su gráfica.</p>':`<p class="statline">Resultado a Maestría ${current}: <strong>×${fmt(factor)}</strong> · resultado a Maestría 500 con estos parámetros: <strong>×${fmt(calc(500,base,numerator,denominator))}</strong></p>`;
+    const warning='';
+    managerRoot.innerHTML=`<article class="reaction-card"><div class="card-head"><div><h3>${esc(item.name)}</h3><span class="tag ${item.known?'known':''}">${esc(item.pair)} · ${item.known?'coeficiente de referencia':'coeficiente exploratorio'}</span></div><label class="base-control">Multiplicador base <input type="number" min="0" max="20" step="0.05" value="${base===null?'':base}" placeholder="ej. 1,5" id="baseMultiplier" aria-label="Multiplicador base de ${esc(item.name)}"></label></div>${readout}${warning}</article>`;
+    chartRoot.innerHTML=base===null?'<div class="empty">Introduce un multiplicador base en el gestor numérico para mostrar esta curva.</div>':`<article class="reaction-card"><div class="card-head"><div><h3>${esc(item.name)}</h3><span class="tag">${esc(item.pair)}</span></div></div><div class="chart-wrap">${graph(item,current,base,numerator,denominator)}</div></article>`;
+    document.getElementById('baseMultiplier').addEventListener('change',event=>{const raw=event.target.value,value=Number(raw);item.base=raw.trim()===''||!Number.isFinite(value)||value<0?undefined:value;item.known=false;render();});
+  }
+  select.addEventListener('change',render);range.addEventListener('input',render);
+  number.addEventListener('input',()=>{let value=Number(number.value);if(Number.isFinite(value)){value=Math.max(0,Math.min(1300,Math.round(value)));range.value=String(value);render();}});
+  numeratorInput.addEventListener('input',render);denominatorInput.addEventListener('input',render);render();
+})();
+</script>
+</body>
+</html>

@@ -118,6 +118,18 @@ En el catálogo se documentan cuatro comportamientos. Una reacción puede tener 
 
 Los multiplicadores de golpe no son lo mismo que `ReactionMultiplier` de la fórmula de daño propio de reacción. Hay que decidir por efecto si modifica un golpe ya calculado o si genera un componente nuevo, para evitar duplicar daño.
 
+### Curva de Maestría para reacciones multiplicativas
+
+La curva de trabajo acordada para multiplicar el golpe detonador es:
+
+~~~text
+ReactionFactor = 1 + BaseMultiplier × ((Maestría × Numerador) / (Maestría + Denominador))
+Numerador = 0,5
+Denominador = 250
+~~~
+
+Con Maestría 0, el factor es ×1. Con Maestría 500, el término de escalado vale 1/3. Para conservar los antiguos factores como referencia en Maestría 500, el configurador usa provisionalmente estos coeficientes: Vaporizado 1,5 (referencia ×1,5), Derretido 4,5 (×2,5), Plasma 2,4 (×1,8) y Quebrahielo 0,9 (×1,3). Los coeficientes se pueden ajustar en el artefacto; la conversión de los tres últimos a coeficientes no debe confundirse con un nuevo valor final aprobado.
+
 ## 4. Catálogo de interacciones acordadas
 
 ### Agua
