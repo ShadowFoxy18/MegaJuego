@@ -1,28 +1,69 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class MovementPlayer : MovementBehavior
 {
-    [SerializeField] GameObject player;
-    [SerializeField, Min(1)] float playerSpeed = 10;
+    [SerializeField] private GameObject movementTarget;
+    [SerializeField, Min(0f)] private float moveSpeed = 5f;
+    [SerializeField] private InputActionAsset inputActions;
 
+    private InputAction moveAction;
+    private Vector2 moveInput;
+    private Rigidbody2D movementBody;
 
-    void Update()
+    private void Awake()
     {
-        if (Input.GetKeyDown(KeyCode.W))
+        if (inputActions == null)
         {
-            MoveNorth(player, playerSpeed);
+            Debug.LogError("Asigna Player.inputactions en el Inspector.", this);
+            enabled = false;
+            return;
         }
-        else if (Input.GetKeyDown(KeyCode.S))
+
+        if (movementTarget != null)
         {
-            MoveSouth(player, playerSpeed);
+            movementBody = movementTarget.GetComponent<Rigidbody2D>();
+            if (movementBody == null)
+                Debug.LogError("El objeto elegido necesita un Rigidbody2D.", movementTarget);
+
+            if (movementTarget.GetComponent<Collider2D>() == null)
+                Debug.LogWarning("Añade un Collider2D al objeto elegido para detectar colisiones.", movementTarget);
         }
-        else if (Input.GetKeyDown(KeyCode.A))
+        else
         {
-            MoveWest(player, playerSpeed);
+            Debug.LogWarning("Arrastra el Empty que quieres mover al campo Movement Target.", this);
         }
-        else if (Input.GetKeyDown(KeyCode.D))
+
+        moveAction = inputActions.FindAction("DungeonMovement/Movement", throwIfNotFound: false);
+        if (moveAction == null)
         {
-            MoveEast(player, playerSpeed);
+            Debug.LogError("No se encontró DungeonMovement/Movement en Player.inputactions.", this);
+            enabled = false;
         }
+
+    }
+
+    private void OnEnable()
+    {
+        moveAction?.Enable();
+    }
+
+    private void OnDisable()
+    {
+        moveAction?.Disable();
+    }
+
+    private void Update()
+    {
+        if (moveAction != null)
+            moveInput = Vector2.ClampMagnitude(moveAction.ReadValue<Vector2>(), 1f);
+    }
+
+    private void FixedUpdate()
+    {
+        if (movementBody == null)
+            return;
+
+        MoveInDirection(movementBody, moveInput, moveSpeed);
     }
 }

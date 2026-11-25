@@ -1,35 +1,13 @@
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class MovementBehavior : MonoBehaviour
 {
-
-    public class MovementAnimation
+    protected void MoveInDirection(Rigidbody2D body, Vector2 direction, float speed)
     {
-        Animation animationOrientation;
-    }
+        if (body == null)
+            return;
 
-    protected bool MoveNorth(GameObject objectMove, float speed)
-    {
-        objectMove.transform.position += new Vector3(0, 1, 0) * speed;
-        return true;
-    }
-
-    protected bool MoveSouth(GameObject objectMove, float speed)
-    {
-        objectMove.transform.position += new Vector3(0, -1, 0) * speed;
-        return true;
-    }
-
-    protected bool MoveEast(GameObject objectMove, float speed)
-    {
-        objectMove.transform.position += new Vector3(1, 0, 0) * speed;
-        return true;
-    }
-
-    protected bool MoveWest(GameObject objectMove, float speed)
-    {
-        objectMove.transform.position += new Vector3(-1, 0, 0) * speed;
-        return true;
+        Vector2 movement = Vector2.ClampMagnitude(direction, 1f) * speed * Time.fixedDeltaTime;
+        body.MovePosition(body.position + movement);
     }
 }
