@@ -11,3 +11,4 @@ public class MovementBehavior : MonoBehaviour
         body.MovePosition(body.position + movement);
     }
 }
+
