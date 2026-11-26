@@ -26,8 +26,8 @@ public class MovementPlayer : MovementBehavior
             if (movementBody == null)
                 Debug.LogError("El objeto elegido necesita un Rigidbody2D.", movementTarget);
 
-            if (movementTarget.GetComponent<Collider2D>() == null)
-                Debug.LogWarning("Añade un Collider2D al objeto elegido para detectar colisiones.", movementTarget);
+            if (movementTarget.GetComponentInChildren<Collider2D>() == null)
+                Debug.LogWarning("Añade un Collider2D al Player o a uno de sus hijos.", movementTarget);
         }
         else
         {
