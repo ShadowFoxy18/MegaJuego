@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: Sprite-0001 - copia
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: 0b68c56a66519d842aaaadaaa5206e3c, type: 3}
-  m_Color: {r: 0.2935961, g: 0.3301887, b: 0.14173195, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 4aef9b7d353612a4d943499b35af42e6, type: 3}
+  m_Color: {r: 0.38679248, g: 0.25612774, b: 0.20616768, a: 1}
   m_Transform:
     e00: 1
     e01: 0
